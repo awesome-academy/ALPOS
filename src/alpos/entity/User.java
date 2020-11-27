@@ -12,6 +12,8 @@ public class User implements Serializable {
 	private String password;
 	private List<Book> books;
 	private String image;
+    private List<Review> reviews;
+    
 
 	public String getImage() {
 		return image;
@@ -88,5 +90,13 @@ public class User implements Serializable {
 
 	public void setRole(Integer role) {
 		this.role = role;
+	}
+	
+    public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
 	}
 }

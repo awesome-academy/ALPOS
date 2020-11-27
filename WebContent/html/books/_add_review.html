@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+	</head>
+	<body>
+		<div th:fragment="add-review">
+			<form th:action="@{/reviews/add}" th:method="POST" th:object="${review}">
+				<input type="hidden" name = "userId" th:attr="value=${review.userId}"/>
+				<input type="hidden" name = "bookId" th:attr="value=${review.bookId}"/>
+				<textarea placeholder ="Write your review here" rows="3" cols="100" th:field="*{content}" required></textarea>
+				<input type="submit" th:attr="value=#{common.submit}"/>		
+			</form>
+		</div>
+	</body>
+</html>
+
+<!-- 
+common.submit=Submit
+ -->

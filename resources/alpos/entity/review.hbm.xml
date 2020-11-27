@@ -11,8 +11,19 @@
 
 		<property name="userId" column="user_id" type="int"></property>
 		<property name="bookId" column="book_id" type="int"></property>
-		<property name="hastagId" column="hastag_id" type="int"></property>
 		<property name="content" column="content" type="string"></property>
+		
+
+		<list name = "hashtags" table = "review_hashtag_temp" inverse="false" lazy="true" fetch="select" cascade="all">
+		<!--
+		<list name = "hashtags" table = "review_hashtag_temp" cascade="save-update">
+		  -->
+		  			<key column = "review_id"/>
+			<list-index column = "id"/>
+			<many-to-many column = "hashtag_id" class="alpos.entity.Hashtag"/>
+		</list>
+		
+		<many-to-one name="user" column="user_id" insert="false" update="false" class="alpos.entity.User"></many-to-one>
   </class>
 
-</hibernate-mapping>  
+</hibernate-mapping>

@@ -40,6 +40,7 @@
 				<value>alpos/entity/review.hbm.xml</value>
 				<value>alpos/entity/relationship.hbm.xml</value>
 				<value>alpos/entity/blacklist.hbm.xml</value>
+				<value>alpos/entity/hashtag.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -82,5 +83,4 @@
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-
 </beans>

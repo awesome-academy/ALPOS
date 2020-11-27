@@ -4,12 +4,15 @@ import alpos.model.AuthorModel;
 import alpos.model.BookModel;
 import alpos.model.CategoryModel;
 import alpos.model.PublisherModel;
+import alpos.model.ReviewModel;
+import alpos.model.UserModel;
 import alpos.service.AuthorService;
 import alpos.service.BookService;
 import alpos.service.CategoryService;
 import alpos.service.PublisherService;
 import alpos.uploader.ImageUpload;
 import alpos.uploader.ImageUploader;
+import alpos.service.ReviewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -60,6 +64,10 @@ public class BookController {
     @Qualifier("bookService")
     BookService bookService;
 
+    @Autowired
+    @Qualifier("reviewService")
+    ReviewService reviewService;
+    
     @GetMapping(value = { "/books/add" })
     public String add(Locale locale, Model model) {
         List<AuthorModel> authors = authorService.findAll();
@@ -108,8 +116,26 @@ public class BookController {
     public String show(@PathVariable Integer id, Model model, HttpServletRequest request, Authentication authentication)
             throws Exception {
         model.addAttribute("book", bookService.findBook(id));
+        
+        //Add model to add-review
+		ReviewModel reviewModel = new ReviewModel();
+		UserModel currentUser = (UserModel) request.getSession().getAttribute("user");
+		reviewModel.setUserId(currentUser.getId());
+		reviewModel.setBookId(id);
+		model.addAttribute("review", reviewModel);
+
         System.out.println("Show book");
         return "books/show";
     }
 
+	
+	@PostMapping(value="/reviews/add")
+	public String addReview (@ModelAttribute("review") @Validated ReviewModel reviewModel, BindingResult bindingResult, HttpServletRequest request) {
+		if (bindingResult.hasErrors()) {
+			return "redirect: " + request.getContextPath() + "/books/" + reviewModel.getBookId();
+		}
+		reviewModel.setHashtags(reviewService.getHashtagFromReviewContent(reviewModel.getContent()));
+		reviewService.addReview(reviewModel);
+		return "redirect: " + request.getContextPath() + "/books/" + reviewModel.getBookId();
+	}
 }

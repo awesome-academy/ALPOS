@@ -4,7 +4,7 @@
  "https://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="alpos.entity.Hastag" table="hastag">
+	<class name="alpos.entity.Hashtag" table="hashtag">
     	<id name="id" column="id" type="int">
      		<generator class="native"></generator>
     	</id>
@@ -12,4 +12,4 @@
 		<property name="name" column="name" type="string"></property>
   </class>
 
-</hibernate-mapping>  
+</hibernate-mapping>

@@ -2,15 +2,15 @@ package alpos.entity;
 
 import java.io.Serializable;
 
-public class Hastag implements Serializable {
+public class Hashtag implements Serializable {
     private Integer id;
     private String  name;
 
-    public Hastag() {
+    public Hashtag() {
 
     }
 
-    public Hastag(Integer id, String name) {
+    public Hashtag(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
