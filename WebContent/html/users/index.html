@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html th:replace="~{templates/layout :: layout(~{::title}, ~{::body}, ~{})}" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title th:text="#{user.index.title}">Users</title>
+</head>
+<body>
+  <h2 th:text="#{user.index.all}">All Users</h2>
+
+  <div th:if="${users.totalPages > 0}" th:replace="~{shared/_pagination :: copy(${users}, '/users')}"></div>
+  
+  <ul class="users">
+  <th:block  th:each="user : ${users.content}">
+    <li th:replace="~{users/_user :: copy(${user})}"></li>
+    </th:block>
+  </ul>
+  
+  <div th:if="${users.totalPages > 0}" th:replace="~{shared/_pagination :: copy(${users}, '/users')}"></div>
+</body>
+</html>

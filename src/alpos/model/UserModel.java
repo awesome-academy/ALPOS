@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 
 @FieldMatch.List({
 		@FieldMatch(first = "password", second = "confirmation", message = "{user.validation.password.notmatch}") })
-public class UserModel {
+public class UserModel extends BaseModel{
 
 	private Integer id;
 	@NotEmpty(message = "{user.validation.name.required}")
