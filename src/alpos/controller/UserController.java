@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 @Controller
 @EnableWebMvc
@@ -111,5 +113,16 @@ public class UserController {
 		model.addAttribute("users", userService.followings(userModel.getId()));
 		return "users/followings";
 	}
+	
+	@GetMapping(value = "/users")
+	public String index(@RequestParam(name = "page", required = false) Optional<Integer> page, Locale locale,
+			Model model, HttpServletRequest request) {
+		UserModel userModel = new UserModel();
+		userModel.setPage(page.orElse(1));
+		Page<UserModel> users = userService.paginate(userModel);
+		model.addAttribute("users", users);
+		return "users/index";
+	}
+	
 	
 }

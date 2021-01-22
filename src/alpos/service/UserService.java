@@ -1,6 +1,9 @@
 package alpos.service;
 
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+
 import alpos.model.UserModel;
 
 public interface UserService {
@@ -16,5 +19,7 @@ public interface UserService {
 	public List<UserModel> findAll();
 
 	public List<UserModel> followings(Integer userId);
+	
+	public Page<UserModel> paginate(UserModel userModel);
 
 }

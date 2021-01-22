@@ -8,10 +8,12 @@ import alpos.model.UserModel;
 import alpos.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -161,6 +163,20 @@ public class UserServiceImp implements UserService {
 
 		}
 		return null;
+	}
+	
+	public Page<UserModel> paginate(UserModel userModel) {
+		try {
+			Page<User> users = userDAO.paginate(userModel.getPageable());
+			return users.map(user -> {
+				UserModel model = new UserModel();
+				BeanUtils.copyProperties(user, model);
+				return model;
+			});
+		} catch (Exception e) {
+			log.info("Adding the user in the database");
+			return null;
+		}
 	}
 
 }
